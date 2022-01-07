@@ -69,7 +69,7 @@
             });
 
             function loadSample(sampleNumber) {              
-                var testArray = [[36.0, 0.77, 5.9, 48.1, 0.0, 20.94, 45.7, 33.25, 28.1, 42.5, 1], [38.0, 0.53, 4.0, 66.1, 0.0, 32.07, 47.3, 41.85, 31.3, 28.6, 0]];
+                var testArray = [[36.0, 0.77, 5.9, 48.1, 0.0, 20.94, 45.7, 1], [38.0, 0.53, 4.0, 66.1, 0.0, 32.07, 47.3, 0]];
                 if (sampleNumber == 1) {
                     loadArray = testArray[0];
                 }
@@ -83,10 +83,8 @@
                 $(".meno").val(loadArray[4]);
                 $(".ca125").val(loadArray[5]);
                 $(".alb").val(loadArray[6]);
-                $(".he4").val(loadArray[7]);
-                $(".glo").val(loadArray[8]);
-                $(".lym").val(loadArray[9]);
-                $(".type").val(loadArray[10]);
+               
+                $(".type").val(loadArray[7]);
             }
 
             function resetForm() {
@@ -200,32 +198,9 @@
                                 </span>
                                 <br>
                             </div>
-                            <div class="row">
-                                <b class="medText">HE4</b>
-                                <span class="medText">
-                                    The HE4 test determines how much <b>human epididymis protein 4</b> is present in the blood. Significantly higher levels of HE4 are present in the bloodstream of a woman with epithelial ovarian cancer.
-                                    <br>
-                                    <b>HE4 reference limit (healthy patients):</b> 85 pmol/l <br>
-                                    <b>Premenopausal subgroup:</b> 73 pmol/l
-                                    <br>
-                                    <b>Postmenopausal subgroup:</b> 93 pmol/l
-                                </span>
-                                <br>
-                            </div>
-                            <div class="row">
-                                <b class="medText">GLO</b>
-                                <span class="medText">
-                                    Also known as Carcinoembryonic Antigen, CEA is a protein present in the blood that can be found in higher quantities in patients with colorectal cancer. The normal range for this biomarker is between 0 and 2.5 ng/ml, and for a smoker, the range is between 0 and 5.0 ng/ml.
-                                </span>
-                                <br>
-                            </div>
-                            <div class="row">
-                                <b class="medText">LYM%</b>
-                                <span class="medText">
-                                    Also known as Carcinoembryonic Antigen, CEA is a protein present in the blood that can be found in higher quantities in patients with colorectal cancer. The normal range for this biomarker is between 0 and 2.5 ng/ml, and for a smoker, the range is between 0 and 5.0 ng/ml.
-                                </span>
-                                <br>
-                            </div>
+                           
+                          
+                          
                         </div>
                     </div>
 
@@ -287,24 +262,9 @@
                                         <input type="number" class="form-control alb" min="0.0" max="1000000.0" step="any" name="alb" id="inputALB" required>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputHE4">HE4</label>
-                                        <input type="number" class="form-control he4" min="0.0" max="1000000.0" step="any" name="he4" id="inputHE4" >
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputGLO">GLO</label>
-                                        <input type="number" class="form-control glo" min="0.0" max="1000000.0" step="any" name="glo" id="inputGLO" >
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputLYM">LYM%</label>
-                                        <input type="number" class="form-control lym" min="0.0" max="1000000.0" step="any" name="lym" id="inputLYM" >
-                                    </div>
-                                </div>
+                               
+                                
+                              
                             </div>
                             {% endif %}
 
@@ -371,24 +331,9 @@
                                         <input type="number" class="form-control alb" min="0.0" max="1000000.0" step="any" name="alb" id="inputALB" required value="{{ original_input['ALB']}}">
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputHE4">HE4</label>
-                                        <input type="number" class="form-control he4" min="0.0" max="1000000.0" step="any" name="he4" id="inputHE4"  value="{{ original_input['HE4']}}">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputGLO">GLO</label>
-                                        <input type="number" class="form-control glo" min="0.0" max="1000000.0" step="any" name="glo" id="inputGLO"  value="{{ original_input['GLO']}}">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputLYM">LYM%</label>
-                                        <input type="number" class="form-control lym" min="0.0" max="1000000.0" step="any" name="lym" id="inputLYM"  value="{{ original_input['LYM%']}}">
-                                    </div>
-                                </div>
+                                
+                                
+                                
                             </div>                            
                             {% endif %}
 
