@@ -1,1 +1,410 @@
+<!doctype html>
+ 
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- CSS code -->
+    <style>
+        form {
+            margin: 5px;
+        }
+
+        .form-row {
+            width: 80%;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+
+        .result {
+        }
+
+        .form-check {
+            color: red;
+        }
+        .header {
+            padding-left:10px;
+            width: stretch;
+            background: transparent url('image1.png') !important;
+        }
+        #con1 {
+            margin-top: 10px;
+            width: stretch;
+            background: transparent url('blue.jpeg');
+        }
+
+        .rounded {
+            border-radius: 1.0rem !important;
+        }
+
+        .medText {
+            padding-left: 8px;
+            padding-top: 2px;
+            padding-right: 6px;
+        }
+
+        .doesNot {
+            font-weight: bold;
+            color: lightgreen;
+        }
+
+        .does {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+    <script language="javascript">
+        $(document).ready(function () {
+          
+            $("#sample1").click(function () {
+                loadSample(1);
+                return false;
+            });
+            $("#sample2").click(function () {          
+                loadSample(2);
+                return false;
+            });
+
+            function loadSample(sampleNumber) {              
+                var testArray = [[36.0, 0.77, 5.9, 48.1, 0.0, 20.94, 45.7, 33.25, 28.1, 42.5, 1], [38.0, 0.53, 4.0, 66.1, 0.0, 32.07, 47.3, 41.85, 31.3, 28.6, 0]];
+                if (sampleNumber == 1) {
+                    loadArray = testArray[0];
+                }
+                else {
+                    loadArray = testArray[1];
+                }             
+                $(".age").val(loadArray[0]);
+                $(".cea").val(loadArray[1]);
+                $(".ibil").val(loadArray[2]);
+                $(".neu").val(loadArray[3]);
+                $(".meno").val(loadArray[4]);
+                $(".ca125").val(loadArray[5]);
+                $(".alb").val(loadArray[6]);
+                $(".he4").val(loadArray[7]);
+                $(".glo").val(loadArray[8]);
+                $(".lym").val(loadArray[9]);
+                $(".type").val(loadArray[10]);
+            }
+
+            function resetForm() {
+                document.getElementByClassName('form-check-input').reset();
+                document.getElementById('myform').reset();
+                document.getElementsByClassName('result').hide();
+            }
+
+            function validate() {
+                document.getElementsByClassName('result').show();
+                return true;
+            }
+        });</script>
+
+    <title>Ovarian Cancer Model</title>
+</head>
+ 
+    <body>
+        <!-- Use the action attribute to call the 'main' function -->
+        <form action="{{ url_for('main') }}" method="POST" onsubmit="return validate()">
+            <div class="container">
+                <div class="row header">
+                    <h1>Ovarian Cancer Prediction Using Machine Learning</h1>
+                </div>            
+                <div class="row">
+                    <div class="form-group">
+                        <div class="form-check">
+                            {% if not(result) %}
+                            <input class="form-check-input" type="checkbox" required>
+                            {% else %}
+                            <input class="form-check-input" type="checkbox" checked>
+                            {% endif %}
+                            <label class="form-check-label" for="gridCheck">
+                                I understand that this tool is an approximation based on a machine learning model and should not be construed as medical advice.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row result">
+                    {% if result %}
+                        <!-- Print prediction -->
+                        {% if prediction[0] > 0.5 %}
+                        <p style="font-size:18px">The ML model <span class="does">DOES </span>suggest an advanced screening for Ovarian Cancer</p>
+                        {% else %}
+                        <br> <p style="font-size:18px">The ML model <span class="doesNot">DOES NOT</span> suggest an advanced screening for Ovarian Cancer</p>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+                <div class="row rounded" style="background-color:lightgray; padding-top:2px;">
+                    <div class="col-md-8" name="col1">
+                        <div class="container-fluid rounded" id="con1">
+                            <div class="row">
+                                <b class="medText">CEA</b>
+                                <span class="medText">
+                                    The CEA test, also known as the Carcinoembryonic Antigen test, is used to measure the amount of CEA protein in the bloodstream. This biomarker is present in the stream in little to no
+                                    quantities, however, some factors, such as smoking can cause levels to increase.
+                                    <br>
+                                    <b>Normal (adult non-smoker) CEA Range:</b> < 2.5 ng/ml
+                                    <br>
+                                    <b>(Abnormal) Adult Smoker CEA Range:</b> < 5.0 ng/ml
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">IBIL</b>
+                                <span class="medText">
+                                    Also known as Carcinoembryonic Antigen, CEA is a protein present in the blood that can be found in higher quantities in patients with colorectal cancer. The normal range for this biomarker is between 0 and 2.5 ng/ml, and for a smoker, the range is between 0 and 5.0 ng/ml.
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">NEU</b>
+                                <span class="medText">
+                                    NEU - representing the neutrophil ratio in our dataset - is a kind of white blood cell that aids the healing of damaged tissues and the resolution of infection. NEU levels increase when in response to different kinds of stress, such as infections and injuries.
+                                    <br>
+                                    <b>Normal NEU Level Range:</b> 1500-8000 neutrophils/microliter
+                                    <br>
+                                    <b>High (abnormal) NEU Level Range:</b> > 8000 neutrophils/microliter
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">Menopause</b>
+                                <span class="medText">
+                                    Menopause describes the period in which a woman’s ovaries stop the production of hormones, therefore also terminating menstruation. This condition is diagnosed after an individual has gone 12 months without menstruation.
+                                   
+                                    Menopause usually occurs between <b>ages 40 and 58</b>.
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">CA125</b>
+                                <span class="medText">
+                                    CA-125 is a protein that is produced on the surface of cells and released into the bloodstream. More than 80% of women with advanced ovarian cancer and 50% of those with early-stage tumors have high levels of this protein.
+                                    The CA125 (Cancer Antigen) test is used to identify the amount of the protein CA125 in your bloodstream. A high level of CA125 in the bloodstream can be indicative of Ovarian Cancer.
+                                    <br>
+                                    <b>Normal Range:</b> 0-35 units/mL <br>
+                                    <b>Higher (abnormal) Range:</b> > 35 units/mL
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">ALB</b>
+                                <span class="medText">
+                                    Albumin, also known as the ALB biomarker in this dataset, is a protein present in the bloodstream. Lower albumin levels indicate malnutrition, while higher albumin levels are indicative of stress from surgery, heart attack, or infection.
+                                    <br>
+                                    <b>Normal Range:</b> 34-54 g/L <br>
+                                    <b>Lower (abnormal) Range:</b> < 34 g/L
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">HE4</b>
+                                <span class="medText">
+                                    The HE4 test determines how much <b>human epididymis protein 4</b> is present in the blood. Significantly higher levels of HE4 are present in the bloodstream of a woman with epithelial ovarian cancer.
+                                    <br>
+                                    <b>HE4 reference limit (healthy patients):</b> 85 pmol/l <br>
+                                    <b>Premenopausal subgroup:</b> 73 pmol/l
+                                    <br>
+                                    <b>Postmenopausal subgroup:</b> 93 pmol/l
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">GLO</b>
+                                <span class="medText">
+                                    Also known as Carcinoembryonic Antigen, CEA is a protein present in the blood that can be found in higher quantities in patients with colorectal cancer. The normal range for this biomarker is between 0 and 2.5 ng/ml, and for a smoker, the range is between 0 and 5.0 ng/ml.
+                                </span>
+                                <br>
+                            </div>
+                            <div class="row">
+                                <b class="medText">LYM%</b>
+                                <span class="medText">
+                                    Also known as Carcinoembryonic Antigen, CEA is a protein present in the blood that can be found in higher quantities in patients with colorectal cancer. The normal range for this biomarker is between 0 and 2.5 ng/ml, and for a smoker, the range is between 0 and 5.0 ng/ml.
+                                </span>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" name="col2">
+
+                        <div class="container">
+                            <div class="row" style="color:blue;">
+                                <a id="sample1" href="#">Sample 1</a>
+                                <span style="width:100px"></span>
+                                <a id="sample2" href="#">Sample 2</a>
+                            </div>
+                            {% if not(result) %}
+                            <div class="row">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputAge">Age</label>
+                                        <input type="number" class="form-control age" name="age" min="15" max="100" step="1" placeholder="Age (15-100)" id="inputAge" required>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputCEA">CEA</label>
+                                        <input type="number" class="form-control cea" name="cea" min="0.0" max="10.0" step="any" id="inputCEA" required>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputIBIL">IBIL</label>
+                                        <input type="number" class="form-control ibil" name="ibil" min="0.0" max="10.0" step="any" id="inputIBIL" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputNEU">NEU</label>
+                                        <input type="number" class="form-control neu" name="neu" min="0" max="100" step="any" id="inputNEU" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputMenopause">Menopause</label>
+                                        <select class="dropdown meno" style="width:100%;" id="inputMenopause" name="meno" required>
+                                            <option value="1"> Yes</option>
+                                            <option value="0"> No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputCA125">CA125</label>
+                                        <input type="number" class="form-control ca125" min="0.0" max="100000.0" step="any" name="ca125" id="inputCA125" required>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputALB">ALB</label>
+                                        <input type="number" class="form-control alb" min="0.0" max="1000000.0" step="any" name="alb" id="inputALB" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputHE4">HE4</label>
+                                        <input type="number" class="form-control he4" min="0.0" max="1000000.0" step="any" name="he4" id="inputHE4" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputGLO">GLO</label>
+                                        <input type="number" class="form-control glo" min="0.0" max="1000000.0" step="any" name="glo" id="inputGLO" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputLYM">LYM%</label>
+                                        <input type="number" class="form-control lym" min="0.0" max="1000000.0" step="any" name="lym" id="inputLYM" required>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if result %}
+                            <div class="row">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputAge">Age</label>
+                                        <input type="number" class="form-control age" name="age" min="15" max="100" step="1" placeholder="Age (15-100)" id="inputAge" required value="{{ original_input['Age']}}">
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputCEA">CEA</label>
+                                        <input type="number" class="form-control cea" name="cea" min="0.0" max="10.0" step="any" id="inputCEA" required value="{{ original_input['CEA']}}">
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputIBIL">IBIL</label>
+                                        <input type="number" class="form-control ibil" name="ibil" min="0.0" max="10.0" step="any" id="inputIBIL" required value="{{ original_input['IBIL']}}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputNEU">NEU</label>
+                                        <input type="number" class="form-control neu" name="neu" min="0" max="100" step="any" id="inputNEU" required value="{{ original_input['NEU']}}">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputMenopause">Menopause</label>
+                                        <select id="inputMenopause" name="meno" class="dropdown meno" style="width:100%;" required>
+                                            {% if original_input['Menopause'] == "1" %}
+
+                                            <option value="1" selected>Yes</option>
+                                            <option value="0">No</option>
+                                            {% elif original_input['Menopause'] == "0" %}
+
+                                            <option value="1">Yes</option>
+                                            <option value="0" selected>No</option>
+                                            {% else %}
+
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputCA125">CA125</label>
+                                        <input type="number" class="form-control ca125" min="0.0" max="1000000.0" step="any" name="ca125" id="inputCA125" required value="{{ original_input['CA125']}}">
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputALB">ALB</label>
+                                        <input type="number" class="form-control alb" min="0.0" max="1000000.0" step="any" name="alb" id="inputALB" required value="{{ original_input['ALB']}}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputHE4">HE4</label>
+                                        <input type="number" class="form-control he4" min="0.0" max="1000000.0" step="any" name="he4" id="inputHE4" required value="{{ original_input['HE4']}}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputGLO">GLO</label>
+                                        <input type="number" class="form-control glo" min="0.0" max="1000000.0" step="any" name="glo" id="inputGLO" required value="{{ original_input['GLO']}}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputLYM">LYM%</label>
+                                        <input type="number" class="form-control lym" min="0.0" max="1000000.0" step="any" name="lym" id="inputLYM" required value="{{ original_input['LYM%']}}">
+                                    </div>
+                                </div>
+                            </div>                            
+                            {% endif %}
+
+                        </div>
+                        <div class="row">                         
+                            <button type="submit" class="btn btn-primary">Predict</button>
+                            <span style="width:100px"></span>
+                            <button type="reset" class="btn btn-secondary" onclick="resetForm();">Reset</button>
+                        </div>
+                       
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </body>
+</html>
 
