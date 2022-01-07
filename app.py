@@ -7,7 +7,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Use pickle to load in the pre-trained model
-filename = "model_7_rf.pkl"
+filename = "model_7_xgb.pkl"
 model = pickle.load(open(filename, "rb"))
 
 # Set up the main route
