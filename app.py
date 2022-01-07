@@ -25,7 +25,7 @@ def main():
         alb = request.form.get("alb")
         
         # Create DataFrame based on input
-        input_variables = pd.DataFrame([[age, cea, ibil,neu,meno,ca125,alb,he4,glo,lym]],
+        input_variables = pd.DataFrame([[age, cea, ibil,neu,meno,ca125,alb]],
                                        columns=['Age','CEA','IBIL','NEU','Menopause','CA125','ALB'],
                                        dtype=float,
                                        index=['input'])
